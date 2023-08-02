@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.Spannable.Factory
 import android.view.LayoutInflater
+import androidx.activity.addCallback
 import androidx.core.content.ContextCompat
 import com.example.notevault.R
 import com.example.notevault.databinding.ActivityEditNoteBinding
@@ -15,6 +16,12 @@ class EditNote : AppCompatActivity() {
     lateinit var binding: ActivityEditNoteBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        var callBack = EditNote().onBackPressedDispatcher.addCallback(this){
+
+        }
+
+        callBack.isEnabled
 
         binding = ActivityEditNoteBinding.inflate(layoutInflater)
 
