@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunitosans_bold"
                 android:gravity="center"
-                android:padding="10dp"
+                android:padding="6dp"
                 android:text="@string/app_name"
                 android:textColor="@color/app_text_color"
                 android:textSize="28sp"
@@ -94,7 +94,9 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/allNotesRV"
         android:layout_width="match_parent"
+        tools:listitem="@layout/item_notes"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

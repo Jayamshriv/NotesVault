@@ -2,4 +2,6 @@
 <resources>
     <dimen name="dimens_splashsc">180dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="dimens_textsize">18sp</dimen>
+    <dimen name="dimens_notesTitleSize">20sp</dimen>
 </resources>

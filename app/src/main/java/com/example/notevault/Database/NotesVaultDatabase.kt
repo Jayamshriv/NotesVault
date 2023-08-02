@@ -10,7 +10,7 @@ import com.example.notevault.Models.NotesVault
 import kotlinx.coroutines.InternalCoroutinesApi
 import kotlinx.coroutines.internal.synchronized
 
-@Database(entities = [NotesVault::class], version = 1)
+@Database(entities = [NotesVault::class], version = 1, exportSchema = false)
 abstract class NotesVaultDatabase : RoomDatabase() {
 
     abstract fun notesVaultDao(): NotesVaultDao
@@ -33,7 +33,8 @@ abstract class NotesVaultDatabase : RoomDatabase() {
                         context,
                         NotesVaultDatabase::class.java,
                         "NotesVault"
-                    ).build()
+                    ).allowMainThreadQueries()
+                        .build()
                     DB_INSTANCE = dbInstance
                 }
             return DB_INSTANCE!!

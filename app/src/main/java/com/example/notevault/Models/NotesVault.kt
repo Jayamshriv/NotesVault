@@ -7,13 +7,14 @@ import java.util.Date
 
 @Entity
 data class NotesVault(
-    @PrimaryKey(autoGenerate = true)
-    val id : Int,
 
-    val title: String,
-    val desc : String,
-    val note : String,
-    val priority : String,
-    val date: String,
-    val password : String
+    @PrimaryKey(autoGenerate = true)
+    var id : Int? = null,
+
+    var title: String,
+    var desc : String,
+    var note : String,
+    var priority : String,
+    var date: String,
+    var password : String
 )
