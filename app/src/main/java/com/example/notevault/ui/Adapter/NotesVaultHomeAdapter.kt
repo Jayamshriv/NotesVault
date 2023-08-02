@@ -3,17 +3,21 @@ package com.example.notevault.ui.Adapter
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.notevault.Models.NotesVault
 import com.example.notevault.R
 import com.example.notevault.databinding.ItemNotesBinding
 import com.example.notevault.ui.Activities.EditNote
+import com.example.notevault.ui.Activities.NotesHome
 
 class NotesVaultHomeAdapter(val context: Context?,val notes: List<NotesVault>?) : RecyclerView.Adapter<NotesVaultHomeAdapter.NotesVaultHomeHolder>() {
 
-    inner class NotesVaultHomeHolder(val binding: ItemNotesBinding) : RecyclerView.ViewHolder(binding.root)
+    inner class NotesVaultHomeHolder(val binding: ItemNotesBinding) : RecyclerView.ViewHolder(binding.root) {
 
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesVaultHomeHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding: ItemNotesBinding = ItemNotesBinding.inflate(inflater, parent, false)
@@ -47,6 +51,16 @@ class NotesVaultHomeAdapter(val context: Context?,val notes: List<NotesVault>?) 
             intent.putExtra("notePriority",note.priority)
             holder.itemView.context.startActivity(intent)
         }
+
+
+//        holder.itemView.setOnLongClickListener {
+//            holder.binding.longPressDelete.visibility= View.VISIBLE
+//            true
+//        }
+//
+//        holder.binding.longPressDelete.setOnClickListener {
+//
+//        }
     }
 
     override fun getItemCount(): Int {

@@ -1,7 +1,8 @@
 package com.example.notevault.ui.Activities
 
-import android.annotation.SuppressLint
+
 import android.content.Intent
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,6 +12,7 @@ import com.example.notevault.Models.NotesVault
 import com.example.notevault.ViewModel.NotesVaultViewModel
 import com.example.notevault.databinding.ActivityNotesHomeBinding
 import com.example.notevault.ui.Adapter.NotesVaultHomeAdapter
+
 
 class NotesHome : AppCompatActivity() {
 
@@ -46,14 +48,13 @@ class NotesHome : AppCompatActivity() {
             }
         })
 
+
+        NotesHome().onBackPressedDispatcher.addCallback(/* owner = */ this){
+            finish()
+        }
         setContentView(binding.root)
 
 
-    }
-
-    override fun onBackPressed() {
-        finish()
-        super.onBackPressed()
     }
 
 }

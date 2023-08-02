@@ -12,7 +12,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/toolbarCV"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="44dp"
         android:backgroundTint="@color/app_bg"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
                 android:padding="6dp"
                 android:text="@string/app_name"
                 android:textColor="@color/app_text_color"
-                android:textSize="28sp"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintTop_toTopOf="parent" />
         </LinearLayout>
@@ -95,7 +95,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/allNotesRV"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="4dp"
         app:layout_constraintBottom_toBottomOf="parent"

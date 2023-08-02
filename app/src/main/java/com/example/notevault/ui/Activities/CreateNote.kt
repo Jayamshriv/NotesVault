@@ -1,5 +1,6 @@
 package com.example.notevault.ui.Activities
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,11 +12,13 @@ import com.example.notevault.Repository.NotesVaultRepository
 import com.example.notevault.ViewModel.NotesVaultViewModel
 import com.example.notevault.databinding.ActivityCreateNoteBinding
 import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Date
 
 class CreateNote : AppCompatActivity() {
 
-    var notesVault: NotesVault = NotesVault(0, "", "", "", "", "", "")
+    var notesVault: NotesVault = NotesVault(null, "", "", "", "", "", "")
     lateinit var binding: ActivityCreateNoteBinding
     val viewModel: NotesVaultViewModel by viewModels()
     var priority = "1"
@@ -71,6 +74,7 @@ class CreateNote : AppCompatActivity() {
                 )
             )
         }
+
         binding.lowPriority.setOnClickListener {
             priority = "1"
             binding.lowPriority.setBackgroundColor(
@@ -98,6 +102,17 @@ class CreateNote : AppCompatActivity() {
             finish()
         }
 
+        binding.shareBtn.setOnClickListener {
+            val sendIntent: Intent = Intent().apply {
+                action = Intent.ACTION_SEND
+                putExtra(Intent.EXTRA_TEXT, "Title : ${binding.titleET}\nDescription : ${binding.desc}\nNote :${binding.note}")
+                type = "text/plain"
+            }
+            val shareIntent = Intent.createChooser(sendIntent, null)
+            startActivity(shareIntent)
+
+        }
+
     }
 
 
@@ -107,7 +122,7 @@ class CreateNote : AppCompatActivity() {
         notesVault.note = binding.note.text.toString()
         notesVault.priority = priority
 
-        val date = LocalDate.now()
+        val date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
         notesVault.date = date.toString()
         viewModel.insertNotes(notesVault)
 

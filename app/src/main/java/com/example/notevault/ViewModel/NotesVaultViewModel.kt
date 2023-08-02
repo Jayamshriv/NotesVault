@@ -31,11 +31,13 @@ class NotesVaultViewModel(application: Application) :AndroidViewModel(applicatio
     }
 
     fun deleteNotes(id : Int){
+        Toast.makeText(getApplication(),"Notes Deleted",Toast.LENGTH_SHORT).show()
         repository.deleteNotes(id)
     }
 
     fun updateNotes(notesVault: NotesVault){
         repository.updateNotes(notesVault)
+        Toast.makeText(getApplication(),"Notes Updated",Toast.LENGTH_SHORT).show()
     }
 
 }
