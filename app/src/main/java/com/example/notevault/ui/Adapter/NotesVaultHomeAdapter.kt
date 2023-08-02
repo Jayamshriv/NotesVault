@@ -12,10 +12,7 @@ import com.example.notevault.ui.Activities.EditNote
 
 class NotesVaultHomeAdapter(val context: Context?,val notes: List<NotesVault>?) : RecyclerView.Adapter<NotesVaultHomeAdapter.NotesVaultHomeHolder>() {
 
-    inner class NotesVaultHomeHolder(val binding: ItemNotesBinding) : RecyclerView.ViewHolder(binding.root){
-
-    }
-
+    inner class NotesVaultHomeHolder(val binding: ItemNotesBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesVaultHomeHolder {
         val inflater = LayoutInflater.from(parent.context)

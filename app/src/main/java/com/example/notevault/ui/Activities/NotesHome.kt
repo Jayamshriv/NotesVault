@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.notevault.Models.NotesVault
 import com.example.notevault.ViewModel.NotesVaultViewModel
 import com.example.notevault.databinding.ActivityNotesHomeBinding
 import com.example.notevault.ui.Adapter.NotesVaultHomeAdapter
@@ -26,14 +27,23 @@ class NotesHome : AppCompatActivity() {
             startActivity(intent)
         }
 
+       val notesVault = listOf(
+           NotesVault(null,"adf","sdad","sdad","sdad","sdad","sdad"),
+           NotesVault(null,"adf","sdad","sdad","sdad","sdad","sdad"),
+           NotesVault(null,"adf","sdad","sdad","sdad","sdad","sdad"),
+           NotesVault(null,"adf","sdad","sdad","sdad","sdad","sdad"),
+           NotesVault(null,"adf","sdad","sdad","sdad","sdad","sdad"),
+           NotesVault(null,"adf","sdad","sdad","sdad","sdad","sdad")
+       )
+
         viewModel.getNotes().observe(this, { notes ->
 
-            for (note in notes){
-                Log.d("Home","ID: ${note.id}, Title: ${note.title}, \n desc : ${note.desc}\n note : ${note.note}")
-            }
             binding.allNotesRV.layoutManager = GridLayoutManager(applicationContext, 2)
             binding.allNotesRV.adapter = NotesVaultHomeAdapter(applicationContext, notes)
 
+            for (note in notesVault){
+                Log.d("Home","ID: ${note.id}, Title: ${note.title}, \n desc : ${note.desc}\n note : ${note.note}")
+            }
         })
 
         setContentView(binding.root)

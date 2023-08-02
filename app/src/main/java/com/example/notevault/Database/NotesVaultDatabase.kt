@@ -15,7 +15,6 @@ abstract class NotesVaultDatabase : RoomDatabase() {
 
     abstract fun notesVaultDao(): NotesVaultDao
 
-
     companion object{
 
         @Volatile
@@ -25,9 +24,7 @@ abstract class NotesVaultDatabase : RoomDatabase() {
         fun getDatabase(context: Context) : NotesVaultDatabase{
 
             val dbins = DB_INSTANCE
-            if(dbins!=null) {
-                return dbins
-            }
+            if(dbins!=null) return dbins
             synchronized(this){
                     val dbInstance = Room.databaseBuilder(
                         context,
