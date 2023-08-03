@@ -15,10 +15,7 @@ data class NotesVault(
     var title: String,
     var desc : String,
     var note : String,
-
-    @NotNull
     var priority : String,
-
     var date: String,
     var password : String
 )

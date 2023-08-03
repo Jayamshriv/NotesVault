@@ -4,6 +4,8 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.example.notevault.Models.NotesVault
@@ -23,10 +25,28 @@ class CreateNote : AppCompatActivity() {
     val viewModel: NotesVaultViewModel by viewModels()
     var priority = "1"
 
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            // Do something when the back button is pressed.
+            // For example, you could pop the current fragment off the back stack.
+            if (supportFragmentManager.backStackEntryCount > 0) {
+//                supportFragmentManager.popBackStack()
+                android.os.Process.killProcess(android.os.Process.myPid())
+                Toast.makeText(this@CreateNote, "Create note to Finish()", Toast.LENGTH_SHORT).show()
+            } else {
+                finish()
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
+
+
+        onBackPressedDispatcher.addCallback(onBackPressedCallback)
         binding = ActivityCreateNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -99,19 +119,28 @@ class CreateNote : AppCompatActivity() {
 
         binding.checkBtn.setOnClickListener {
             createNotes()
-            finish()
         }
 
         binding.shareBtn.setOnClickListener {
-            val sendIntent: Intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, "Title : ${binding.titleET}\nDescription : ${binding.desc}\nNote :${binding.note}")
-                type = "text/plain"
-            }
-            val shareIntent = Intent.createChooser(sendIntent, null)
-            startActivity(shareIntent)
+            createNotes()
 
+            if (notesVault.title.isNotBlank()) {
+                val sendIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(
+                        Intent.EXTRA_TEXT,
+                        "Title : ${notesVault.title}\nDescription : ${notesVault.desc}\nNote :${notesVault.note}"
+                    )
+                    type = "text/plain"
+                }
+                val shareIntent = Intent.createChooser(sendIntent, null)
+                startActivity(shareIntent)
+                finish()
+            } else {
+                Toast.makeText(this, "Title is Empty Again, BKL !!!", Toast.LENGTH_SHORT).show()
+            }
         }
+
 
     }
 
@@ -121,10 +150,16 @@ class CreateNote : AppCompatActivity() {
         notesVault.desc = binding.desc.text.toString()
         notesVault.note = binding.note.text.toString()
         notesVault.priority = priority
-
         val date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
         notesVault.date = date.toString()
-        viewModel.insertNotes(notesVault)
 
+        if (notesVault.title.isNotBlank()) {
+            viewModel.insertNotes(notesVault)
+
+            finish()
+
+        } else {
+            Toast.makeText(this, "Title is Empty, BKL !!!", Toast.LENGTH_SHORT).show()
+        }
     }
 }

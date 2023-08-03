@@ -22,4 +22,21 @@ class NotesVaultRepository(private val dao: NotesVaultDao) {
         dao.updateNotes(notesVault)
     }
 
+    fun highPriorityFilter(): LiveData<List<NotesVault>>{
+        return dao.getHighPriority()
+    }
+
+    fun medPriorityFilter(): LiveData<List<NotesVault>>{
+        return dao.getMedPriority()
+    }
+
+    fun lowPriorityFilter(): LiveData<List<NotesVault>>{
+        return dao.getLowPriority()
+    }
+
+
+    fun dateFilter(): LiveData<List<NotesVault>>{
+        return dao.dateFilter()
+    }
+
 }

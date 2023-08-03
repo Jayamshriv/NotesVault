@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/allNotes"
+        android:title="All "/>
+    <item android:id="@+id/date"
+        android:title="Date"/>
+    <item android:id="@+id/priority"
+        android:title="Priority">
+
+        <menu>
+            <item android:id="@+id/highMenuPriority"
+                android:title="High"/>
+            <item android:id="@+id/medMenuPriority"
+            android:title="Medium"/>
+            <item android:id="@+id/lowMenuPriority"
+                android:title="Low"/>
+        </menu>
+    </item>
+
+
+</menu>

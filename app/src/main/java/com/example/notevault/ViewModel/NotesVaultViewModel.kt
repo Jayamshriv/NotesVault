@@ -27,7 +27,6 @@ class NotesVaultViewModel(application: Application) :AndroidViewModel(applicatio
     fun insertNotes(notesVault: NotesVault){
         repository.insertNotes(notesVault)
         Toast.makeText(getApplication(),"Notes Created",Toast.LENGTH_SHORT).show()
-        Log.d("Insert ","VIEW MODEL")
     }
 
     fun deleteNotes(id : Int){
@@ -38,6 +37,27 @@ class NotesVaultViewModel(application: Application) :AndroidViewModel(applicatio
     fun updateNotes(notesVault: NotesVault){
         repository.updateNotes(notesVault)
         Toast.makeText(getApplication(),"Notes Updated",Toast.LENGTH_SHORT).show()
+    }
+
+
+    fun highPriorityFilter() : LiveData<List<NotesVault>>{
+        Toast.makeText(getApplication(),"Filtered for High Priority",Toast.LENGTH_SHORT).show()
+        return repository.highPriorityFilter()
+    }
+
+    fun medPriorityFilter() : LiveData<List<NotesVault>>{
+        Toast.makeText(getApplication(),"Filtered for Med Priority",Toast.LENGTH_SHORT).show()
+        return repository.medPriorityFilter()
+    }
+
+    fun lowPriorityFilter(): LiveData<List<NotesVault>>{
+        Toast.makeText(getApplication(),"Filtered for Low Priority",Toast.LENGTH_SHORT).show()
+        return repository.lowPriorityFilter()
+    }
+
+    fun dateFilter(): LiveData<List<NotesVault>>{
+        Toast.makeText(getApplication(),"Filtered for Priority",Toast.LENGTH_SHORT).show()
+        return repository.dateFilter()
     }
 
 }

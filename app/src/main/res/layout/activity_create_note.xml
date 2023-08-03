@@ -56,8 +56,6 @@
                 android:layout_marginStart="4dp"
                 android:src="@drawable/ic_baseline_check_24"/>
 
-
-
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 
@@ -76,6 +74,8 @@
 
         android:singleLine="true"
         app:layout_constraintTop_toBottomOf="@id/createTB" />
+
+
 
     <ScrollView
         android:id="@+id/dsecSv"

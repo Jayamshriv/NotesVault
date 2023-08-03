@@ -18,4 +18,17 @@ interface NotesVaultDao {
 
     @Update
     fun updateNotes(notesVault: NotesVault)
+
+    @Query("SELECT * FROM NotesVault WHERE priority = 10")
+    fun getHighPriority() : LiveData<List<NotesVault>>
+
+    @Query("SELECT * FROM NotesVault WHERE priority = 5")
+    fun getMedPriority() : LiveData<List<NotesVault>>
+
+    @Query("SELECT * FROM NotesVault WHERE priority = 1")
+    fun getLowPriority() : LiveData<List<NotesVault>>
+
+    @Query("SELECT * FROM NotesVault ORDER BY date DESC")
+    fun dateFilter() : LiveData<List<NotesVault>>
+
 }

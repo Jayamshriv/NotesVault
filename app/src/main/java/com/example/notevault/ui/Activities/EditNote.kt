@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.Spannable.Factory
 import android.view.LayoutInflater
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.example.notevault.Models.NotesVault
@@ -18,14 +21,29 @@ import java.time.format.DateTimeFormatter
 
 class EditNote : AppCompatActivity() {
 
-    val viewModel : NotesVaultViewModel by viewModels()
-    lateinit var priority : String
-    lateinit var title : String
-    lateinit var desc : String
-    lateinit var note : String
-    var id : Int? = null
-    var notesVault = NotesVault(null,"","","","","","")
+    val viewModel: NotesVaultViewModel by viewModels()
+    lateinit var priority: String
+    lateinit var title: String
+    lateinit var desc: String
+    lateinit var note: String
+    var id: Int? = null
+    var notesVault = NotesVault(null, "", "", "", "", "", "")
     lateinit var binding: ActivityEditNoteBinding
+
+    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+        override fun handleOnBackPressed() {
+            // Do something when the back button is pressed.
+            // For example, you could pop the current fragment off the back stack.
+            if (supportFragmentManager.backStackEntryCount > 0) {
+//                supportFragmentManager.popBackStack()
+                startActivity(Intent(applicationContext,NotesHome::class.java))
+                Toast.makeText(this@EditNote,"Edit note to Create Note",Toast.LENGTH_SHORT).show()
+            } else {
+                finish()
+            }
+        }
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -118,14 +136,17 @@ class EditNote : AppCompatActivity() {
 
         binding.deleteBtn.setOnClickListener {
             viewModel.deleteNotes(id!!)
-            startActivity(Intent(applicationContext,NotesHome::class.java))
+            startActivity(Intent(applicationContext, NotesHome::class.java))
         }
 
 
         binding.shareBtn.setOnClickListener {
             val sendIntent: Intent = Intent().apply {
                 action = Intent.ACTION_SEND
-                putExtra(Intent.EXTRA_TEXT, "Title : ${title}\nDescription : ${desc}\nNote :${note}")
+                putExtra(
+                    Intent.EXTRA_TEXT,
+                    "Title : ${title}\nDescription : ${desc}\nNote :${note}"
+                )
                 type = "text/plain"
             }
             val shareIntent = Intent.createChooser(sendIntent, null)
@@ -133,12 +154,20 @@ class EditNote : AppCompatActivity() {
 
         }
 
+
+        binding.homeBackBtn.setOnClickListener {
+            startActivity(Intent(applicationContext,NotesHome::class.java))
+            Toast.makeText(this@EditNote,"Edit note to Create Note",Toast.LENGTH_SHORT).show()
+        }
+
+        onBackPressedDispatcher.addCallback(onBackPressedCallback)
+
         setContentView(binding.root)
 
     }
 
 
-    private fun editNotes(){
+    private fun editNotes() {
         notesVault.id = id
         notesVault.title = binding.titleET.text.toString()
         notesVault.desc = binding.desc.text.toString()
@@ -151,9 +180,9 @@ class EditNote : AppCompatActivity() {
     }
 
 
-    fun priorityCheck(priority : String) {
-        when(priority){
-            "1"->{
+    fun priorityCheck(priority: String) {
+        when (priority) {
+            "1" -> {
                 binding.lowPriority.setBackgroundColor(
                     ContextCompat.getColor(
                         this,
@@ -173,7 +202,7 @@ class EditNote : AppCompatActivity() {
                     )
                 )
             }
-            "5"->{
+            "5" -> {
                 binding.medPriority.setBackgroundColor(
                     ContextCompat.getColor(
                         this,
@@ -193,7 +222,7 @@ class EditNote : AppCompatActivity() {
                     )
                 )
             }
-            "10"->{
+            "10" -> {
                 binding.highPriority.setBackgroundColor(
                     ContextCompat.getColor(
                         this,
