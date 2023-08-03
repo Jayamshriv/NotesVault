@@ -14,4 +14,5 @@
     <color name="low_priority_green">#2F6B2F</color>
     <color name="med_priority_yellow">#ACA459</color>
     <color name="priority_btn_bg">#4A4A4A</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

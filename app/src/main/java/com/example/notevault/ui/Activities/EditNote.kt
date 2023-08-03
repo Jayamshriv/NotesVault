@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.Spannable.Factory
 import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.OnBackPressedDispatcher
@@ -15,6 +18,7 @@ import com.example.notevault.Models.NotesVault
 import com.example.notevault.R
 import com.example.notevault.ViewModel.NotesVaultViewModel
 import com.example.notevault.databinding.ActivityEditNoteBinding
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -36,8 +40,8 @@ class EditNote : AppCompatActivity() {
             // For example, you could pop the current fragment off the back stack.
             if (supportFragmentManager.backStackEntryCount > 0) {
 //                supportFragmentManager.popBackStack()
-                startActivity(Intent(applicationContext,NotesHome::class.java))
-                Toast.makeText(this@EditNote,"Edit note to Create Note",Toast.LENGTH_SHORT).show()
+                startActivity(Intent(applicationContext, NotesHome::class.java))
+                Toast.makeText(this@EditNote, "Edit note to Create Note", Toast.LENGTH_SHORT).show()
             } else {
                 finish()
             }
@@ -134,9 +138,28 @@ class EditNote : AppCompatActivity() {
             finish()
         }
 
+
         binding.deleteBtn.setOnClickListener {
-            viewModel.deleteNotes(id!!)
-            startActivity(Intent(applicationContext, NotesHome::class.java))
+            val bottomSheetDialog = BottomSheetDialog(this@EditNote)
+            bottomSheetDialog.setContentView(R.layout.delete_note_dialog)
+
+
+            val textViewYes = bottomSheetDialog.findViewById<TextView>(R.id.yesDltBtn)
+            val textViewNo = bottomSheetDialog.findViewById<TextView>(R.id.noDltBtn)
+
+            textViewYes?.setOnClickListener {
+                viewModel.deleteNotes(id!!)
+                bottomSheetDialog.dismiss()
+                Toast.makeText(this,"Notes Deleted",Toast.LENGTH_SHORT).show()
+                startActivity(Intent(applicationContext, NotesHome::class.java))
+            }
+
+            textViewNo?.setOnClickListener{
+                Toast.makeText(this,"Nhi Kr Raha Jaaa",Toast.LENGTH_SHORT).show()
+                bottomSheetDialog.dismiss()
+            }
+
+            bottomSheetDialog.show()
         }
 
 
@@ -156,8 +179,8 @@ class EditNote : AppCompatActivity() {
 
 
         binding.homeBackBtn.setOnClickListener {
-            startActivity(Intent(applicationContext,NotesHome::class.java))
-            Toast.makeText(this@EditNote,"Edit note to Create Note",Toast.LENGTH_SHORT).show()
+            startActivity(Intent(applicationContext, NotesHome::class.java))
+            Toast.makeText(this@EditNote, "Edit note to Create Note", Toast.LENGTH_SHORT).show()
         }
 
         onBackPressedDispatcher.addCallback(onBackPressedCallback)

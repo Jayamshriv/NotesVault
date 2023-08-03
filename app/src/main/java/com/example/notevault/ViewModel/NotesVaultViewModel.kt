@@ -56,7 +56,7 @@ class NotesVaultViewModel(application: Application) :AndroidViewModel(applicatio
     }
 
     fun dateFilter(): LiveData<List<NotesVault>>{
-        Toast.makeText(getApplication(),"Filtered for Priority",Toast.LENGTH_SHORT).show()
+        Toast.makeText(getApplication(),"Filtered for Date",Toast.LENGTH_SHORT).show()
         return repository.dateFilter()
     }
 
