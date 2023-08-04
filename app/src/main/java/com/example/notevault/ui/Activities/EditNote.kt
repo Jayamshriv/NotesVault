@@ -4,14 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
-import android.text.Spannable.Factory
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.OnBackPressedDispatcher
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.example.notevault.Models.NotesVault
@@ -19,7 +14,6 @@ import com.example.notevault.R
 import com.example.notevault.ViewModel.NotesVaultViewModel
 import com.example.notevault.databinding.ActivityEditNoteBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
@@ -31,7 +25,7 @@ class EditNote : AppCompatActivity() {
     lateinit var desc: String
     lateinit var note: String
     var id: Int? = null
-    var notesVault = NotesVault(null, "", "", "", "", "", "")
+    var notesVault = NotesVault(id, "", "", "", "", "", "")
     lateinit var binding: ActivityEditNoteBinding
 
     private val onBackPressedCallback = object : OnBackPressedCallback(true) {
@@ -135,14 +129,15 @@ class EditNote : AppCompatActivity() {
 
         binding.checkBtn.setOnClickListener {
             editNotes()
+
             finish()
         }
 
 
         binding.deleteBtn.setOnClickListener {
+
             val bottomSheetDialog = BottomSheetDialog(this@EditNote)
             bottomSheetDialog.setContentView(R.layout.delete_note_dialog)
-
 
             val textViewYes = bottomSheetDialog.findViewById<TextView>(R.id.yesDltBtn)
             val textViewNo = bottomSheetDialog.findViewById<TextView>(R.id.noDltBtn)

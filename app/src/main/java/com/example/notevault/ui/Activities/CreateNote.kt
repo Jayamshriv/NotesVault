@@ -1,22 +1,22 @@
 package com.example.notevault.ui.Activities
 
 import android.content.Intent
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import com.example.notevault.Models.NotesVault
 import com.example.notevault.R
-import com.example.notevault.Repository.NotesVaultRepository
 import com.example.notevault.ViewModel.NotesVaultViewModel
 import com.example.notevault.databinding.ActivityCreateNoteBinding
-import java.time.LocalDate
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.Date
 
 class CreateNote : AppCompatActivity() {
 
@@ -33,7 +33,8 @@ class CreateNote : AppCompatActivity() {
             if (supportFragmentManager.backStackEntryCount > 0) {
 //                supportFragmentManager.popBackStack()
                 android.os.Process.killProcess(android.os.Process.myPid())
-                Toast.makeText(this@CreateNote, "Create note to Finish()", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this@CreateNote, "Create note to Finish()", Toast.LENGTH_SHORT)
+                    .show()
             } else {
                 finish()
             }
@@ -117,14 +118,26 @@ class CreateNote : AppCompatActivity() {
             )
         }
 
+
+
         binding.checkBtn.setOnClickListener {
-            createNotes()
+
+            val titleText = binding.titleET.text.toString().trim()
+            if (titleText.isEmpty()) {
+                binding.titleET.error = "Title can't be Empty"
+                Toast.makeText(this, "Title is Empty, BKL !!!", Toast.LENGTH_SHORT).show()
+            } else {
+                showPswdConfirm()
+            }
         }
 
         binding.shareBtn.setOnClickListener {
-            createNotes()
-
-            if (notesVault.title.isNotBlank()) {
+            val titleText = binding.titleET.text.toString().trim()
+            if (titleText.isEmpty()) {
+                binding.titleET.error = "Title can't be Empty"
+                Toast.makeText(this, "Title is Empty, BKL !!!", Toast.LENGTH_SHORT).show()
+            } else {
+                showPswdConfirm()
                 val sendIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
                     putExtra(
@@ -136,8 +149,6 @@ class CreateNote : AppCompatActivity() {
                 val shareIntent = Intent.createChooser(sendIntent, null)
                 startActivity(shareIntent)
                 finish()
-            } else {
-                Toast.makeText(this, "Title is Empty Again, BKL !!!", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -145,21 +156,95 @@ class CreateNote : AppCompatActivity() {
     }
 
 
+    fun createNote(passwd: String) {
+        notesVault.title = binding.titleET.text.toString()
+        notesVault.desc = binding.desc.text.toString()
+        notesVault.note = binding.note.text.toString()
+        notesVault.priority = priority
+
+        val date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+        notesVault.date = date.toString()
+        notesVault.password = passwd
+
+        viewModel.insertNotes(notesVault)
+        finish()
+    }
+
     fun createNotes() {
         notesVault.title = binding.titleET.text.toString()
         notesVault.desc = binding.desc.text.toString()
         notesVault.note = binding.note.text.toString()
         notesVault.priority = priority
+
         val date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
         notesVault.date = date.toString()
 
-        if (notesVault.title.isNotBlank()) {
-            viewModel.insertNotes(notesVault)
+        viewModel.insertNotes(notesVault)
+        finish()
 
-            finish()
+    }
 
-        } else {
-            Toast.makeText(this, "Title is Empty, BKL !!!", Toast.LENGTH_SHORT).show()
+    fun showPswdConfirm() {
+
+        // show password yes or no
+        val bottomSheet = BottomSheetDialog(this@CreateNote)
+        bottomSheet.setContentView(R.layout.delete_note_dialog)
+
+        val textDialog = bottomSheet.findViewById<TextView>(R.id.textDialog)
+        textDialog?.text = "Want to make this Note\nPassword Protected ?"
+        val yesTV = bottomSheet.findViewById<TextView>(R.id.yesDltBtn)
+        val noTV = bottomSheet.findViewById<TextView>(R.id.noDltBtn)
+
+        Log.v("#####", "Bottomsheet notes se baad ")
+
+        yesTV?.setOnClickListener {
+            Log.v("#####", "YesTv 1 ke andar ")
+            showEnterPswd()
+            bottomSheet.dismiss()
         }
+        noTV?.setOnClickListener {
+            Log.v("#####", "NoTv 1 ke andar ")
+            createNotes()
+            bottomSheet.dismiss()
+        }
+        bottomSheet.show()
+    }
+
+
+    fun showEnterPswd() {
+
+        Log.v("#####", "YesTv 2 ke andar ")
+
+        // if yes then shows password dialog to enter password
+        val bottomSheetDialog = BottomSheetDialog(this@CreateNote)
+        bottomSheetDialog.setContentView(R.layout.password_dialog)
+        Toast.makeText(this@CreateNote, "Yes clicked", Toast.LENGTH_SHORT).show()
+
+        val okTV = bottomSheetDialog.findViewById<TextView>(R.id.okPswdBtn)
+        val cancelTV = bottomSheetDialog.findViewById<TextView>(R.id.cancelPswdBtn)
+
+        okTV?.setOnClickListener {
+            val pswdET = bottomSheetDialog.findViewById<EditText>(R.id.password)
+
+            val pswd = pswdET?.text.toString().trim()
+
+            Log.v("#####", "okTV ke andar ${pswd},${pswd.length} ")
+
+             createNote(pswd)
+
+            Toast.makeText(
+                this@CreateNote,
+                "OK clicked ${notesVault.password}",
+                Toast.LENGTH_SHORT
+            ).show()
+            bottomSheetDialog.dismiss()
+        }
+
+        cancelTV?.setOnClickListener {
+            createNotes()
+            Toast.makeText(this@CreateNote, "Cancel clicked", Toast.LENGTH_SHORT).show()
+            bottomSheetDialog.dismiss()
+        }
+        bottomSheetDialog.show()
     }
 }

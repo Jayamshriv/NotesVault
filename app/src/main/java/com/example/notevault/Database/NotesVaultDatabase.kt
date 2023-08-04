@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 
 import com.example.notevault.DAO.NotesVaultDao
 import com.example.notevault.Models.NotesVault
@@ -15,29 +17,26 @@ abstract class NotesVaultDatabase : RoomDatabase() {
 
     abstract fun notesVaultDao(): NotesVaultDao
 
-    companion object{
+
+    companion object {
 
         @Volatile
-        private var DB_INSTANCE : NotesVaultDatabase? = null
+        private var DB_INSTANCE: NotesVaultDatabase? = null
 
         @OptIn(InternalCoroutinesApi::class)
-        fun getDatabase(context: Context) : NotesVaultDatabase{
+        fun getDatabase(context: Context): NotesVaultDatabase {
 
-            val dbins = DB_INSTANCE
-            if(dbins!=null) return dbins
-            synchronized(this){
-                    val dbInstance = Room.databaseBuilder(
-                        context,
-                        NotesVaultDatabase::class.java,
-                        "NotesVault"
-                    ).allowMainThreadQueries()
-                        .build()
-                    DB_INSTANCE = dbInstance
-                }
-            return DB_INSTANCE!!
-
+            return DB_INSTANCE ?: synchronized(this) {
+                val dbInstance = Room.databaseBuilder(
+                    context.applicationContext,
+                    NotesVaultDatabase::class.java,
+                    "NotesVault"
+                )
+                    .allowMainThreadQueries()
+                    .build()
+                DB_INSTANCE = dbInstance
+                dbInstance
+            }
         }
-
     }
-
 }

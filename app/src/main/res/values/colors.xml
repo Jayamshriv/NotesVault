@@ -15,4 +15,5 @@
     <color name="med_priority_yellow">#ACA459</color>
     <color name="priority_btn_bg">#4A4A4A</color>
     <color name="transparent">#00FFFFFF</color>
+    <color name="red">#9D2927</color>
 </resources>

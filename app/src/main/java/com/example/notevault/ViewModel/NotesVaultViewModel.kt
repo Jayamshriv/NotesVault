@@ -21,6 +21,7 @@ class NotesVaultViewModel(application: Application) :AndroidViewModel(applicatio
     }
 
     fun getNotes(): LiveData<List<NotesVault>>{
+        Toast.makeText(getApplication(),"All notes",Toast.LENGTH_SHORT).show()
         return repository.getNotes()
     }
 
