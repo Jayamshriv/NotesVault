@@ -16,6 +16,7 @@ import com.example.notevault.R
 import com.example.notevault.ViewModel.NotesVaultViewModel
 import com.example.notevault.databinding.ActivityNotesHomeBinding
 import com.example.notevault.ui.Adapter.NotesVaultHomeAdapter
+import kotlin.system.exitProcess
 
 
 class NotesHome : AppCompatActivity() {
@@ -25,26 +26,23 @@ class NotesHome : AppCompatActivity() {
     var oldNotesList = arrayListOf<NotesVault>()
     lateinit var adapter: NotesVaultHomeAdapter
 
-    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-            // Do something when the back button is pressed.
-            // For example, you could pop the current fragment off the back stack.
-            if (supportFragmentManager.backStackEntryCount > 0) {
-//                supportFragmentManager.popBackStack()
-                android.os.Process.killProcess(android.os.Process.myPid())
-                Toast.makeText(this@NotesHome, "Create note to Finish()", Toast.LENGTH_SHORT).show()
-            } else {
-                finish()
-            }
-        }
-    }
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityNotesHomeBinding.inflate(layoutInflater)
+        onBackPressedDispatcher.addCallback(this,object : OnBackPressedCallback(true){
+            private var backPressedOnce = false
+            override fun handleOnBackPressed() {
+                if (backPressedOnce) {
+                    // Close the app.
+                    finishAffinity()
+                } else {
+                    backPressedOnce = true
+                    Toast.makeText(applicationContext, "Press back again to exit", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
 
+        binding = ActivityNotesHomeBinding.inflate(layoutInflater)
         //adapter
         binding.allNotesRV.layoutManager =
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)

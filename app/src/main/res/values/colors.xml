@@ -7,8 +7,10 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+<!--    <color name="logo_bg_color">#35155D</color>-->
     <color name="logo_bg_color">#292D52</color>
-    <color name="app_bg">#7C7C7C</color>
+    <color name="app_bg">#919191</color>
+<!--    <color name="app_bg">#8CABFF</color>-->
     <color name="app_text_color">#FFFFFF</color>
     <color name="high_priority_red">#F84B4B</color>
     <color name="low_priority_green">#08A808</color>

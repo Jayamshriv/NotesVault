@@ -76,9 +76,7 @@ class NotesVaultHomeAdapter(val context: Context?, var notes: List<NotesVault>?)
 
                     } else {
                         Log.v("#####", "ifpasswordCorrect  False  $ifPasswordCorrect")
-
-                        Toast.makeText(context, "Password galat hai bawa", Toast.LENGTH_SHORT)
-                            .show()
+                        Toast.makeText(context, "Incorrect Password", Toast.LENGTH_SHORT).show()
                     }
                 }
 

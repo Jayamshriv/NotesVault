@@ -4,6 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -28,25 +30,20 @@ class EditNote : AppCompatActivity() {
     var notesVault = NotesVault(id, "", "", "", "", "", "")
     lateinit var binding: ActivityEditNoteBinding
 
-    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-            // Do something when the back button is pressed.
-            // For example, you could pop the current fragment off the back stack.
-            if (supportFragmentManager.backStackEntryCount > 0) {
-//                supportFragmentManager.popBackStack()
-                startActivity(Intent(applicationContext, NotesHome::class.java))
-                Toast.makeText(this@EditNote, "Edit note to Create Note", Toast.LENGTH_SHORT).show()
-            } else {
-                finish()
-            }
-        }
-    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityEditNoteBinding.inflate(layoutInflater)
+
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish()
+            }
+        })
+
+
 
         id = intent.getIntExtra("noteID", -1)
         title = intent.getStringExtra("noteTitle")!!
@@ -129,9 +126,8 @@ class EditNote : AppCompatActivity() {
 
         binding.checkBtn.setOnClickListener {
             editNotes()
-
-            finish()
         }
+
 
 
         binding.deleteBtn.setOnClickListener {
@@ -145,12 +141,12 @@ class EditNote : AppCompatActivity() {
             textViewYes?.setOnClickListener {
                 viewModel.deleteNotes(id!!)
                 bottomSheetDialog.dismiss()
-                Toast.makeText(this,"Notes Deleted",Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "Notes Deleted", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(applicationContext, NotesHome::class.java))
             }
 
-            textViewNo?.setOnClickListener{
-                Toast.makeText(this,"Nhi Kr Raha Jaaa",Toast.LENGTH_SHORT).show()
+            textViewNo?.setOnClickListener {
+//                Toast.makeText(this, "Nhi Kr Raha Jaaa", Toast.LENGTH_SHORT).show()
                 bottomSheetDialog.dismiss()
             }
 
@@ -174,11 +170,9 @@ class EditNote : AppCompatActivity() {
 
 
         binding.homeBackBtn.setOnClickListener {
-            startActivity(Intent(applicationContext, NotesHome::class.java))
-            Toast.makeText(this@EditNote, "Edit note to Create Note", Toast.LENGTH_SHORT).show()
+            finish()
+//            Toast.makeText(this@EditNote, "Edit note to Create Note", Toast.LENGTH_SHORT).show()
         }
-
-        onBackPressedDispatcher.addCallback(onBackPressedCallback)
 
         setContentView(binding.root)
 
@@ -195,6 +189,7 @@ class EditNote : AppCompatActivity() {
         val date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
         notesVault.date = date.toString()
         viewModel.updateNotes(notesVault)
+        finish()
     }
 
 
@@ -264,4 +259,82 @@ class EditNote : AppCompatActivity() {
 
     }
 
+
+    fun showPswdConfirm() {
+
+        // show password yes or no
+        val bottomSheet = BottomSheetDialog(this@EditNote)
+        bottomSheet.setContentView(R.layout.delete_note_dialog)
+
+        val textDialog = bottomSheet.findViewById<TextView>(R.id.textDialog)
+        textDialog?.text = "Want to make this Note\nPassword Protected ?"
+        val yesTV = bottomSheet.findViewById<TextView>(R.id.yesDltBtn)
+        val noTV = bottomSheet.findViewById<TextView>(R.id.noDltBtn)
+
+        Log.v("#####", "Bottomsheet notes se baad ")
+
+        yesTV?.setOnClickListener {
+            Log.v("#####", "YesTv 1 ke andar ")
+            showEnterPswd()
+            bottomSheet.dismiss()
+        }
+        noTV?.setOnClickListener {
+            Log.v("#####", "NoTv 1 ke andar ")
+            editNotes()
+            bottomSheet.dismiss()
+        }
+        bottomSheet.show()
+    }
+
+
+    fun showEnterPswd() {
+
+        Log.v("#####", "YesTv  edit 2 ke andar ")
+
+        // if yes then shows password dialog to enter password
+        val bottomSheetDialog = BottomSheetDialog(this@EditNote)
+        bottomSheetDialog.setContentView(R.layout.password_dialog)
+//        Toast.makeText(this@EditNote, "Yes edit clicked", Toast.LENGTH_SHORT).show()
+
+        val okTV = bottomSheetDialog.findViewById<TextView>(R.id.okPswdBtn)
+        val cancelTV = bottomSheetDialog.findViewById<TextView>(R.id.cancelPswdBtn)
+
+        okTV?.setOnClickListener {
+            val pswdET = bottomSheetDialog.findViewById<EditText>(R.id.password)
+
+            val pswd = pswdET?.text.toString().trim()
+
+            Log.v("#####", "okTV Edit ke andar ${pswd},${pswd.length} ")
+
+            editNote(pswd)
+
+            Toast.makeText(
+                this@EditNote,
+                "OK clicked ${notesVault.password}",
+                Toast.LENGTH_SHORT
+            ).show()
+            bottomSheetDialog.dismiss()
+        }
+
+        cancelTV?.setOnClickListener {
+            editNotes()
+//            Toast.makeText(this@EditNote, "Cancel clicked", Toast.LENGTH_SHORT).show()
+            bottomSheetDialog.dismiss()
+        }
+        bottomSheetDialog.show()
+    }
+
+    private fun editNote(passwd: String) {
+        notesVault.title = binding.titleET.text.toString()
+        notesVault.desc = binding.desc.text.toString()
+        notesVault.note = binding.note.text.toString()
+        notesVault.priority = priority
+
+        val date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))
+        notesVault.date = date.toString()
+        notesVault.password = passwd
+
+        viewModel.updateNotes(notesVault)
+        finish()
+    }
 }

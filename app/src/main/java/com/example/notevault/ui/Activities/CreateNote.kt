@@ -4,7 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
@@ -26,28 +28,17 @@ class CreateNote : AppCompatActivity() {
     var priority = "1"
 
 
-    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-            // Do something when the back button is pressed.
-            // For example, you could pop the current fragment off the back stack.
-            if (supportFragmentManager.backStackEntryCount > 0) {
-//                supportFragmentManager.popBackStack()
-                android.os.Process.killProcess(android.os.Process.myPid())
-                Toast.makeText(this@CreateNote, "Create note to Finish()", Toast.LENGTH_SHORT)
-                    .show()
-            } else {
-                finish()
-            }
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                finish()
+            }
+        })
 
 
-        onBackPressedDispatcher.addCallback(onBackPressedCallback)
         binding = ActivityCreateNoteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -119,13 +110,16 @@ class CreateNote : AppCompatActivity() {
         }
 
 
+        binding.homeBackBtn.setOnClickListener {
+            finish()
+        }
 
         binding.checkBtn.setOnClickListener {
 
             val titleText = binding.titleET.text.toString().trim()
             if (titleText.isEmpty()) {
                 binding.titleET.error = "Title can't be Empty"
-                Toast.makeText(this, "Title is Empty, BKL !!!", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "Title is Empty, BKL !!!", Toast.LENGTH_SHORT).show()
             } else {
                 showPswdConfirm()
             }
@@ -135,7 +129,7 @@ class CreateNote : AppCompatActivity() {
             val titleText = binding.titleET.text.toString().trim()
             if (titleText.isEmpty()) {
                 binding.titleET.error = "Title can't be Empty"
-                Toast.makeText(this, "Title is Empty, BKL !!!", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "Title is Empty, BKL !!!", Toast.LENGTH_SHORT).show()
             } else {
                 showPswdConfirm()
                 val sendIntent: Intent = Intent().apply {
@@ -203,8 +197,17 @@ class CreateNote : AppCompatActivity() {
             bottomSheet.dismiss()
         }
         noTV?.setOnClickListener {
+
+            val passwordIV = findViewById<ImageView>(R.id.hasPasswordIV)
+            if(passwordIV == null) {
+                Log.v("####", "Image view null")
+            }else {
+                passwordIV.visibility = View.INVISIBLE
+                createNotes()
+            }
+
+
             Log.v("#####", "NoTv 1 ke andar ")
-            createNotes()
             bottomSheet.dismiss()
         }
         bottomSheet.show()
@@ -218,7 +221,7 @@ class CreateNote : AppCompatActivity() {
         // if yes then shows password dialog to enter password
         val bottomSheetDialog = BottomSheetDialog(this@CreateNote)
         bottomSheetDialog.setContentView(R.layout.password_dialog)
-        Toast.makeText(this@CreateNote, "Yes clicked", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this@CreateNote, "Yes clicked", Toast.LENGTH_SHORT).show()
 
         val okTV = bottomSheetDialog.findViewById<TextView>(R.id.okPswdBtn)
         val cancelTV = bottomSheetDialog.findViewById<TextView>(R.id.cancelPswdBtn)
@@ -231,18 +234,19 @@ class CreateNote : AppCompatActivity() {
             Log.v("#####", "okTV ke andar ${pswd},${pswd.length} ")
 
              createNote(pswd)
-
-            Toast.makeText(
-                this@CreateNote,
-                "OK clicked ${notesVault.password}",
-                Toast.LENGTH_SHORT
-            ).show()
             bottomSheetDialog.dismiss()
         }
 
         cancelTV?.setOnClickListener {
-            createNotes()
-            Toast.makeText(this@CreateNote, "Cancel clicked", Toast.LENGTH_SHORT).show()
+
+            val passwordIV = findViewById<ImageView>(R.id.hasPasswordIV)
+            if(passwordIV == null) {
+                Log.v("####", "Image view null")
+            }else {
+                passwordIV.visibility = View.INVISIBLE
+                createNotes()
+            }
+//            Toast.makeText(this@CreateNote, "Cancel clicked", Toast.LENGTH_SHORT).show()
             bottomSheetDialog.dismiss()
         }
         bottomSheetDialog.show()

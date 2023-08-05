@@ -74,7 +74,9 @@
                     android:id="@+id/filterImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
+                    android:layout_marginStart="2dp"
+                    android:layout_marginEnd="4dp"
+                    android:layout_marginBottom="2dp"
                     app:cardCornerRadius="4dp">
 
                     <ImageView
@@ -91,7 +93,6 @@
                     android:layout_marginTop="2dp"
                     android:layout_marginEnd="4dp"
                     android:layout_marginBottom="2dp"
-                    android:backgroundTint="@color/app_bg"
                     app:cardCornerRadius="4dp">
 
                     <androidx.appcompat.widget.SearchView
