@@ -5,12 +5,19 @@ This is a simple Notes App that allows users to create, edit, and delete notes. 
 # Features🚀
 
 Create, edit, and delete notes.
+
 Password protection 🔒 for added security.
+
 Add priority to your Note(🔴🟡🟢).
+
 User-friendly interface for ease of use.
+
 Local storage to preserve notes across sessions.💾
+
 Share notes with anyone you know.
+
 Arrange your Notes as per priority and date.
+
 Responsive design to support various screen sizes.
 
 
@@ -27,7 +34,7 @@ Responsive design to support various screen sizes.
       <img src="![image](https://github.com/Jayamshriv/NotesVault/assets/101198837/6fca3397-837f-49e1-9d1c-8f5369a27459)" alt="Screenshot 3" width="400"/>
     </td>
      <td align="center">
-      <img src="![image](https://github.com/Jayamshriv/NotesVault/assets/101198837/ddb63b26-a77f-45a5-b677-170fa5e0d813)" alt="Screenshot 3" width="400"/>
+      <img src="./![image](https://github.com/Jayamshriv/NotesVault/assets/101198837/ddb63b26-a77f-45a5-b677-170fa5e0d813)" alt="Screenshot 3" width="400"/>
     </td>
      <td align="center">
       <img src="![image](https://github.com/Jayamshriv/NotesVault/assets/101198837/85e0c223-a5be-48f4-8701-a8879038e17b)" alt="Screenshot 3" width="400"/>
