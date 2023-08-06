@@ -40,8 +40,6 @@ Responsive design to support various screen sizes.
   </tr>
 </table>
 
-![image](https://github.com/Jayamshriv/NotesVault/assets/101198837/dfdcad93-c28e-4dfb-9418-d1e20fb007cb)
-
 
 #Usage📋
 Upon opening the app, you'll be presented with a list of existing notes (if any) or an empty list if there are no notes yet.
