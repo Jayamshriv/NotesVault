@@ -9,8 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:backgroundTint="@color/itemnotes_bg"
         app:cardCornerRadius="8dp"
-        app:cardElevation="4dp">
+        app:cardElevation="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -30,7 +31,7 @@
                     android:id="@+id/titleTV"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="6dp"
                     android:layout_weight="7"
                     android:ellipsize="end"
                     android:fontFamily="@font/nunitosans_bold"
@@ -68,7 +69,8 @@
                 android:id="@+id/descTV"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="6dp"
                 android:ellipsize="end"
                 android:fontFamily="@font/nunitosans"
                 android:maxLines="4"

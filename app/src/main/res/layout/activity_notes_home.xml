@@ -52,22 +52,12 @@
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/sortingCV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:backgroundTint="#B45C5B5B"
-            android:orientation="horizontal"
-            app:cardCornerRadius="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/toolbarCV">
-
 
             <LinearLayout
+                android:id="@+id/sortingLL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="4dp"
                 android:orientation="horizontal">
 
                 <androidx.cardview.widget.CardView
@@ -75,13 +65,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="2dp"
+                    android:layout_gravity="center"
                     android:layout_marginEnd="4dp"
-                    android:layout_marginBottom="2dp"
+
                     app:cardCornerRadius="4dp">
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="32dp"
+                        android:layout_height="36dp"
                         android:padding="2dp"
                         android:src="@drawable/ic_baseline_sort_24" />
 
@@ -89,16 +80,17 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="2dp"
                     android:layout_marginEnd="4dp"
+                    android:layout_gravity="center"
                     android:layout_marginBottom="2dp"
                     app:cardCornerRadius="4dp">
 
                     <androidx.appcompat.widget.SearchView
                         android:id="@+id/search_bar"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="36dp"
                         app:iconifiedByDefault="false"
                         app:queryHint="Search notes..." />
 
@@ -107,19 +99,19 @@
 
             </LinearLayout>
 
-        </androidx.cardview.widget.CardView>
 
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/allNotesRV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginEnd="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sortingCV"
+            app:layout_constraintTop_toBottomOf="@id/sortingLL"
             app:layout_constraintVertical_bias="0.0"
             tools:listitem="@layout/item_notes" />
     </LinearLayout>

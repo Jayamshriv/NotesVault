@@ -198,13 +198,9 @@ class CreateNote : AppCompatActivity() {
         }
         noTV?.setOnClickListener {
 
+            createNotes()
             val passwordIV = findViewById<ImageView>(R.id.hasPasswordIV)
-            if(passwordIV == null) {
-                Log.v("####", "Image view null")
-            }else {
-                passwordIV.visibility = View.INVISIBLE
-                createNotes()
-            }
+            passwordIV.visibility = View.INVISIBLE
 
 
             Log.v("#####", "NoTv 1 ke andar ")
@@ -233,20 +229,17 @@ class CreateNote : AppCompatActivity() {
 
             Log.v("#####", "okTV ke andar ${pswd},${pswd.length} ")
 
-             createNote(pswd)
+            createNote(pswd)
             bottomSheetDialog.dismiss()
         }
 
         cancelTV?.setOnClickListener {
 
+            createNotes()
             val passwordIV = findViewById<ImageView>(R.id.hasPasswordIV)
-            if(passwordIV == null) {
-                Log.v("####", "Image view null")
-            }else {
-                passwordIV.visibility = View.INVISIBLE
-                createNotes()
-            }
-//            Toast.makeText(this@CreateNote, "Cancel clicked", Toast.LENGTH_SHORT).show()
+
+            passwordIV.visibility = View.INVISIBLE
+            //            Toast.makeText(this@CreateNote, "Cancel clicked", Toast.LENGTH_SHORT).show()
             bottomSheetDialog.dismiss()
         }
         bottomSheetDialog.show()
