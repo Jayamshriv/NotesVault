@@ -1,7 +1,8 @@
-NotesVault 📝
+# NotesVault 📝
+
 This is a simple Notes App that allows users to create, edit, and delete notes. The app also offers the option to add a password for extra security to protect sensitive information. With this app, users can keep track of their important thoughts, ideas, and reminders while ensuring their privacy is maintained.
 
-#Features🚀
+# Features🚀
 
 Create, edit, and delete notes.
 Password protection 🔒 for added security.
@@ -13,7 +14,7 @@ Arrange your Notes as per priority and date.
 Responsive design to support various screen sizes.
 
 
-#Interface
+# Interface
 <table>
   <tr>
     <td align="center">
@@ -41,7 +42,7 @@ Responsive design to support various screen sizes.
 </table>
 
 
-#Usage📋
+# Usage📋
 Upon opening the app, you'll be presented with a list of existing notes (if any) or an empty list if there are no notes yet.
 
 To create a new note, click on the "+" button and enter the content in the provided text area. Click "✔" to add the note.
